@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>David Elufowoju</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #050505;
+    --bg2: #0f0f0f;
+    --accent: #d40000;
+    --accent2: #d40000;
+    --text: #f0f0f0;
+    --muted: #555555;
+    --border: rgba(212,0,0,0.2);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none;
+    z-index: 9000;
+  }
+
+  .cursor {
+    width: 2px; height: 20px;
+    background: var(--accent);
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    animation: blink 1s step-end infinite;
+    transform: translateY(-50%);
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(8,14,20,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-location {
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-location::before { content: '◎'; color: var(--accent2); font-size: 8px; }
+
+  .nav-tag { font-size: 18px; font-weight: 700; color: var(--muted); letter-spacing: 2px; }
+
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a { font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 1px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-menu { font-size: 11px; color: var(--muted); border: 1px solid var(--border); padding: 6px 16px; cursor: none; }
+
+  /* Hero */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: 120px 48px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 220px;
+    width: 1px; height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--border) 20%, var(--border) 80%, transparent);
+  }
+
+  .hero-top {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .hero-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 14vw, 180px);
+    line-height: 0.85;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-top: 20px;
+  }
+
+  .hero-sidebar {
+    padding-top: 12px;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero-sidebar-item {
+    font-size: 12px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-sidebar-item::before { content: '>'; }
+
+  .hero-sidebar-sub {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .hero-sidebar-sub::before { content: '>'; }
+
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: end;
+    gap: 32px;
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+  }
+
+  .hero-intro {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .hero-intro span { color: var(--accent); }
+
+  .hello-line {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+  .hello-line .label { white-space: nowrap; }
+  .hello-line .dash { width: 60px; height: 1px; background: var(--muted); }
+
+  .hero-fullname {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+
+  .read-more-btn {
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: none;
+    white-space: nowrap;
+    align-self: center;
+  }
+  .read-more-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* Sections */
+  section { padding: 100px 48px; border-top: 1px solid var(--border); }
+
+  .section-header { display: flex; align-items: baseline; gap: 24px; margin-bottom: 64px; }
+  .section-num { font-size: 11px; color: var(--accent); letter-spacing: 2px; }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 80px);
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .about-text { font-size: 13px; line-height: 2.2; color: var(--muted); }
+  .about-text p { margin-bottom: 20px; }
+  .about-text strong { color: var(--text); font-weight: 400; }
+
+  .skills-list { display: flex; flex-direction: column; }
+  .skill-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 24px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    align-items: center;
+  }
+  .skill-cat { color: var(--accent); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
+  .skill-val { color: var(--muted); }
+
+  /* Experience */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 48px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+    transition: padding-left 0.3s;
+  }
+  .exp-item:hover { padding-left: 16px; }
+
+  .exp-date { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+  .exp-badge {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+  }
+
+  .exp-role { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; margin-bottom: 4px; }
+  .exp-company { font-size: 11px; color: var(--accent2); margin-bottom: 16px; letter-spacing: 1px; }
+  .exp-desc { font-size: 12px; color: var(--muted); line-height: 2; }
+
+  /* Projects */
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); }
+
+  .project-card {
+    background: var(--bg);
+    padding: 48px;
+    transition: background 0.3s;
+    position: relative;
+  }
+  .project-card:hover { background: var(--bg2); }
+
+  .project-num { font-size: 10px; color: var(--accent); letter-spacing: 3px; margin-bottom: 28px; }
+  .project-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 2px; margin-bottom: 16px; line-height: 1; }
+  .project-desc { font-size: 12px; color: var(--muted); line-height: 2; margin-bottom: 28px; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); }
+
+  /* Contact */
+  #contact { text-align: center; }
+  .contact-big { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 10vw, 130px); letter-spacing: 4px; line-height: 1; margin-bottom: 12px; }
+  .contact-big span { color: var(--accent); }
+  .contact-sub { font-size: 12px; color: var(--muted); margin-bottom: 48px; letter-spacing: 1px; }
+  .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+  .btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: none;
+  }
+  .btn:hover { color: var(--accent); border-color: var(--accent); }
+  .btn.primary { border-color: var(--accent); color: var(--accent); }
+  .btn.primary:hover { background: var(--accent); color: var(--bg); }
+
+  footer {
+    padding: 32px 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links, .nav-location { display: none; }
+    #hero { padding: 100px 20px 40px; }
+    .hero-top { grid-template-columns: 1fr; }
+    .hero-bottom { grid-template-columns: 1fr; gap: 16px; }
+    section { padding: 60px 20px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 12px; }
+    footer { padding: 20px; flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <div class="nav-location">Birmingham, UK</div>
+  <div class="nav-tag"></></div>
+  <div class="nav-links">
+    <a href="#about">Welcome</a>
+    <a href="#experience">About</a>
+    <a href="#projects">Project</a>
+  </div>
+  <div class="nav-menu">Menu</div>
+</nav>
+
+<section id="hero">
+  <div class="hero-top">
+    <div class="hero-big">Portfolio</div>
+    <div class="hero-sidebar">
+      <div class="hero-sidebar-item">Full-Stack Developer</div>
+      <div class="hero-sidebar-item">AI Engineer</div>
+      <div class="hero-sidebar-sub">2026</div>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-intro">
+      <span>// available for work</span><br>
+      Open to full-stack,<br>ML &amp; AI-adjacent roles.
+    </div>
+    <div>
+      <div class="hello-line"><span class="label">_Hello I'M</span><div class="dash"></div></div>
+      <div class="hero-fullname">David<br>Elufowoju</div>
+    </div>
+    <a href="#about" class="read-more-btn">Read More</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-num">// 01</span>
+    <h2 class="section-title">About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I work across the full stack — from <strong>React frontends</strong> to <strong>Node.js APIs</strong> to <strong>ML pipelines</strong>.</p>
+      <p>Currently fine-tuning AI models and evaluating LLM outputs at <strong>Mercor AI</strong>. Final year BSc Computer Science at <strong>Coventry University</strong>.</p>
+      <p>Previously built data pipelines at <strong>Wise</strong> that cut manual reporting time by 40%. Member of the <strong>Applied Computing Society</strong>.</p>
+    </div>
+    <div class="skills-list reveal">
+      <div class="skill-row"><span class="skill-cat">Languages</span><span class="skill-val">Python · JS · SQL · C#</span></div>
+      <div class="skill-row"><span class="skill-cat">Frontend</span><span class="skill-val">React · Vue.js · HTML/CSS</span></div>
+      <div class="skill-row"><span class="skill-cat">Backend</span><span class="skill-val">Node.js · Koa · REST APIs</span></div>
+      <div class="skill-row"><span class="skill-cat">AI / ML</span><span class="skill-val">Transformers · NLP · RLHF</span></div>
+      <div class="skill-row"><span class="skill-cat">Cloud</span><span class="skill-val">AWS EC2 · S3 · Git</span></div>
+      <div class="skill-row"><span class="skill-cat">Data</span><span class="skill-val">Tableau · Power BI · Pipelines</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">// 02</span>
+    <h2 class="section-title">Experience</h2>
+  </div>
+  <div class="exp-item reveal">
+    <div>
+      <div class="exp-date">Sep 2025 — Present</div>
+      <div class="exp-badge">Current</div>
+    </div>
+    <div>
+      <div class="exp-role">AI Annotator</div>
+      <div class="exp-company">// Mercor AI</div>
+      <div class="exp-desc">Evaluating and annotating LLM outputs to improve model alignment and response quality. Working across fine-tuning pipelines and RLHF workflows.</div>
+    </div>
+  </div>
+  <div class="exp-item reveal">
+    <div>
+      <div class="exp-date">2024</div>
+      <div class="exp-badge">Internship</div>
+    </div>
+    <div>
+      <div class="exp-role">Data Analysis Intern</div>
+      <div class="exp-company">// Wise</div>
+      <div class="exp-desc">Built Python/SQL pipelines and dashboards supporting product and operations teams. Reduced manual reporting time by 40%.</div>
+    </div>
+  </div>
+  <div class="exp-item reveal">
+    <div>
+      <div class="exp-date">2023</div>
+      <div class="exp-badge">Contract</div>
+    </div>
+    <div>
+      <div class="exp-role">IT Project Manager</div>
+      <div class="exp-company">// The Bracebridge</div>
+      <div class="exp-desc">Designed and deployed an IT inventory database from scratch. Tracked POS terminals and network equipment, eliminating hardware downtime.</div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">// 03</span>
+    <h2 class="section-title">Projects</h2>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-num">// 01</div>
+      <div class="project-title">Book Database API</div>
+      <div class="project-desc">Full-stack REST API with Node.js/Koa backend, MySQL database, Vue.js frontend, JWT authentication and full test coverage.</div>
+      <div class="project-stack"><span class="tag">Node.js</span><span class="tag">Koa</span><span class="tag">MySQL</span><span class="tag">Vue.js</span><span class="tag">JWT</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">// 02</div>
+      <div class="project-title">AI Chatbot</div>
+      <div class="project-desc">Fine-tuned a transformer model on custom datasets achieving 90% intent classification accuracy. Deployed via REST API.</div>
+      <div class="project-stack"><span class="tag">Python</span><span class="tag">Transformers</span><span class="tag">NLP</span><span class="tag">REST API</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">// 03</div>
+      <div class="project-title">Analytics Dashboard</div>
+      <div class="project-desc">Interactive dashboard processing 1M+ rows of sales data using Python and Tableau. Cut reporting time by 40%.</div>
+      <div class="project-stack"><span class="tag">Python</span><span class="tag">Tableau</span><span class="tag">SQL</span><span class="tag">Pipelines</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">// 04</div>
+      <div class="project-title">.NET MAUI Recipe App</div>
+      <div class="project-desc">Cross-platform mobile app with SQLite, CRUD, TheMealDB API, MVVM architecture and 6 documented design patterns.</div>
+      <div class="project-stack"><span class="tag">C#</span><span class="tag">.NET MAUI</span><span class="tag">SQLite</span><span class="tag">MVVM</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="contact-big reveal">Let's <span>Build</span><br>Something.</h2>
+  <p class="contact-sub reveal">// Open to full-stack · ML engineering · AI-adjacent roles</p>
+  <div class="contact-links reveal">
+    <a href="mailto:davfowoju@gmail.com" class="btn primary">davfowoju@gmail.com</a>
+    <a href="https://github.com/elufowojud" target="_blank" class="btn">GitHub</a>
+    <a href="https://linkedin.com/in/elufowojud" target="_blank" class="btn">LinkedIn</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 David Elufowoju</span>
+  <span>Birmingham, UK · davfowoju@gmail.com</span>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
